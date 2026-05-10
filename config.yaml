@@ -1,0 +1,64 @@
+
+# PIPELINE MODE
+
+mode: both           # doc/anpr/both
+
+#--------------------------------------------------------------------------
+# INPUT PATHS
+
+input:
+  anpr_image: Test_imgs\T1.jpg           # image containing vehicle number plate
+  doc_image: Test_imgs\D1.jpg                            # logistics / transport document image
+
+
+models:
+  yolo_path: models/yolo26n.pt             # YOLO model trained for license plate detection
+
+
+ocr:
+  model: server                            # mobile | server      [ Paddle OCR V5 ] 
+
+#--------------------------------------------------------------------------
+# ANPR SETTINGS
+
+anpr:
+
+# YOLO DETECTION SETTINGS
+  detection:  
+    conf_threshold: 0.25                      # YOLO DETECTION (Plates) confidence threshold
+ 
+
+# # OCR SETTINGS
+#   ocr:
+#     drop_score: 0.3                           # PaddleOCR text confidence threshold
+#     det_db_box_thresh: 0.5                    # OCR text box detection sensitivity
+
+
+# PLATE TEXT FILTERING
+  plate_filter:
+    min_text_height_ratio: 0.70                # removes small text based on relative text height
+    min_plate_length: 8                       # minimum valid plate character count
+
+  output:
+    save_json: true                           # save ANPR result to JSON file
+    json_path: output/anpr_result.json        # output file path
+
+#--------------------------------------------------------------------------
+doc_ocr:
+
+# OCR SETTINGS
+  # ocr:
+  #   det_db_box_thresh: 0.25                   # OCR text box detection sensitivity
+
+  output:
+    save_json: true                          # save Doc Ocr result to JSON file
+    json_path: output/doc_result.json        # output file path
+
+
+#--------------------------------------------------------------------------
+debug:
+  show_image: true                          # display detection result window Opencv (ANPR - Num Plate)
+
+  save_image: true                          # Save current output img 
+  image_path: output/output_image.jpg       # Output img path
+

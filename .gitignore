@@ -1,0 +1,54 @@
+# python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# virtual environments
+venv/
+env/
+anpr_env/
+anprdoc_env/
+.venv/
+.anprdoc_env/
+
+# outputs
+output/
+*.json
+
+# logs
+*.log
+
+# system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# temp files
+*.tmp
+*.temp
+
+# optional large files
+*.zip
+*.tar
+*.gz
+*.7z
+
+# test script outputs (keep .py files only)
+Test_scripts/**/output/
+Test_scripts/**/*.csv
+Test_scripts/**/*.xlsx
+Test_scripts/**/*.jpg
+Test_scripts/**/*.png
+
+# paddle cache (auto downloaded locally)
+.paddleocr/
+.paddlex/
+.cache/
+
+# large doc OCR dataset
+Test_scripts/doc_ocr_test_samples/

@@ -1,0 +1,18 @@
+
+# ---------- core ----------
+numpy==1.26.4
+pyyaml==6.0.2
+
+# ---------- vision ----------
+opencv-python==4.9.0.80
+pillow==10.4.0
+
+# ---------- detection ----------
+torch==2.5.1
+torchvision==0.20.1
+ultralytics==8.4.33
+ultralytics-thop==2.0.18
+
+# ---------- OCR (PP-OCRv5 compatible) ----------
+paddleocr==3.4.1
+paddlepaddle==3.2.0
