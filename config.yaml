@@ -57,8 +57,7 @@ doc_ocr:
 
 #--------------------------------------------------------------------------
 debug:
-  show_image: true                          # display detection result window Opencv (ANPR - Num Plate)
-
-  save_image: true                          # Save current output img 
+  show_image: false                         # display detection result window Opencv (disabled in server/Docker)
+  save_image: false                         # Save current output img
   image_path: output/output_image.jpg       # Output img path
 

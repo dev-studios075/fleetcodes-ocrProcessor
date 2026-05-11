@@ -235,3 +235,8 @@ def process(req: ProcessRequest):
             os.rmdir(os.path.dirname(local_path))
         except Exception:
             pass
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=False)
