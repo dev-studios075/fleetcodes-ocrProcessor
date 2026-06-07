@@ -96,6 +96,29 @@ class ProcessRequest(BaseModel):
         return v
 
 
+class ProcessLocalRequest(BaseModel):
+    local_path: str
+    type: str  # anpr | doc | both
+
+    @field_validator("type")
+    @classmethod
+    def validate_type(cls, v):
+        v = v.lower().strip()
+        if v not in VALID_TYPES:
+            raise ValueError(f"type must be one of: {', '.join(VALID_TYPES)}")
+        return v
+
+    @field_validator("local_path")
+    @classmethod
+    def validate_local_path(cls, v):
+        v = v.strip()
+        if not v:
+            raise ValueError("local_path must not be empty")
+        if not os.path.isfile(v):
+            raise ValueError(f"File not found: {v}")
+        return v
+
+
 # ─────────────────────────────────────────────
 # HELPERS
 # ─────────────────────────────────────────────
@@ -235,6 +258,25 @@ def process(req: ProcessRequest):
             os.rmdir(os.path.dirname(local_path))
         except Exception:
             pass
+
+
+@app.post("/process-local")
+def process_local(req: ProcessLocalRequest):
+    """
+    Process a locally accessible image file based on type:
+      - anpr  → license plate detection & OCR
+      - doc   → document header OCR
+      - both  → both pipelines
+    """
+    response = {"local_path": req.local_path, "type": req.type}
+
+    if req.type in ("anpr", "both"):
+        response["anpr"] = run_anpr_on_image(req.local_path)
+
+    if req.type in ("doc", "both"):
+        response["doc"] = run_doc_on_image(req.local_path)
+
+    return JSONResponse(content=response)
 
 
 if __name__ == "__main__":
